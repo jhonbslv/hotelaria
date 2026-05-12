@@ -37,12 +37,14 @@ body{
 a{
     color: #29292b;
     font-size: 20px;
+   
 }
 
 .pagina_1 >svg , .pagina_2 >svg , .pagina_3 >svg {
     width: 25px;
     height: auto;
     margin-left: 20px;
+    
 
 }
 
@@ -51,4 +53,30 @@ a{
 }
 .pagina_1{
     margin-top: 70px;
+}
+
+.card{
+    display: flex;
+   
+}
+.card-1, .card-2 ,.card-3{
+    background-color: #202ec7;
+    width: 290px;
+    height: 290px;
+    border-radius: 40px;
+    margin: 20px;
+    
+}
+
+.card-1{
+    margin-left: 40px;
+    background-color: #18800a;
+}
+
+.card-2{
+    background-color: #e68210;
+}
+
+.card-3{
+    background-color: #7404d6;
 }

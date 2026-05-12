@@ -1,0 +1,69 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Reserva</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/addreserva.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-hotel"></i>
+            <span>HOTEL ADMIN</span>
+        </div>
+        <nav class="menu">
+            <a href="/" class="menu-item">
+                <i class="fa-solid fa-table-columns"></i>
+                Dashboard
+            </a>
+
+            <a href="/hospedes" class="menu-item">
+                <i class="fa-solid fa-users"></i>
+                Hóspedes
+            </a>
+
+            <a href="/quartos" class="menu-item">
+                <i class="fa-solid fa-bed"></i>
+                Quartos
+            </a>
+
+            <a href="/reservas" class="menu-item active">
+                <i class="fa-solid fa-calendar-days"></i>
+                Reservas
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-gear"></i>
+                Configurações
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <div class="header">
+            <h1>Nova Reserva</h1>
+            <p>Cadastre uma nova hospedagem</p>
+        </div>
+
+        <div class="card-form">
+
+            <form action="/add_reserva" method="POST">
+
+                <div class="form-group">
+                    <label>Hóspede</label>
+                    <select name="hospede_id" required>
+                        <option value="">Selecione um hóspede</option>
+
+                        {% for hospede in hospedes %}
+                        <option value="{{ hospede.id }}">
+                            {{ hospede.nome }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+

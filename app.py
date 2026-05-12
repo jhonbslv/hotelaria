@@ -20,7 +20,11 @@ async def home(request: Request):
         context={"posts": posts}
     )
 
-#---- PAgina Quartos ----
+#--------------------------
+# Pagina de Quartos
+#--------------------------
+
+# LISTAR TODOS OS QUARTOS
 @app.get("/quartos", response_class=HTMLResponse)
 async def quartos(request: Request):
 
@@ -30,7 +34,7 @@ async def quartos(request: Request):
         context={"request": request, "quartos": model.consulta_quartos()}
     )
 
-#adicionar um quarto
+# ADICIONAR QUARTOS
 @app.get("/add_quarto", response_class=HTMLResponse)
 async def add_quarto(request: Request):
 
@@ -41,7 +45,7 @@ async def add_quarto(request: Request):
     )
 
 
-#salvar quarto
+# SALVAR A ADIÇAO DE QUARTOS
 @app.post("/add_quarto", response_class=HTMLResponse)
 async def salvar_quarto(request: Request):
 
@@ -56,18 +60,8 @@ async def salvar_quarto(request: Request):
 
     return RedirectResponse(url="/quartos", status_code=303)
 
-#deletar um quarto
-@app.post("/delete_quarto/{id}")
-async def deletar_quarto(id: int):
 
-    delete_quarto(id)
-
-    return RedirectResponse(
-        url="/quartos",
-        status_code=303
-    )
-
-#editar um quarto
+# EDITAR QUARTOS
 @app.get("/edit_quarto/{id}", response_class=HTMLResponse)
 async def editar_quarto(request: Request, id: int):
 
@@ -77,13 +71,13 @@ async def editar_quarto(request: Request, id: int):
         context={"request": request, "quarto": model.consulta_quarto_id(id)}
     )
 
-# SALVAR A EDIÇÃO 
+# SALVAR A EDIÇÃO DOS QUARTOS
 @app.post("/edit_quarto/{id}")
 async def salvar_edicao_quarto(request: Request, id: int):
 
     form = await request.form()
 
-    update_quarto(
+    model.update_quarto(
         id,
         form.get("numero"),
         form.get("tipo"),
@@ -91,13 +85,16 @@ async def salvar_edicao_quarto(request: Request, id: int):
         form.get("status")
     )
 
-    return RedirectResponse(
-        url="/quartos",
-        status_code=303
-    )
+    return RedirectResponse(url="/quartos", status_code=303)
 
 
+# DELETAR UM QUARTO
+@app.post("/delete_quarto/{id}")
+async def deletar_quarto(id: int):
 
+    model.delete_quarto(id)
+
+    return RedirectResponse(url="/quartos", status_code=303)
 
 #--------------------------
 # Pagina de Hospedes
@@ -115,4 +112,27 @@ async def hospedes(request: Request):
         }
     )
 
+@app.get("/add_hospede", response_class=HTMLResponse)
+async def add_hospedes(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="add_hospedes.html",
+        context={
+            "request": request,
+            "hospedes": model.consulta_hospedes()
+        }
+    )
 
+@app.post("/add_hospede", response_class=HTMLResponse)
+async def salvar_hospede(request: Request):
+
+    form = await request.form()
+
+    add_hospede(
+        form.get("nome"),
+        form.get("email"),
+        form.get("telefone"),
+        form.get("cpf")
+    )
+
+    return RedirectResponse(url="/hospedes", status_code=303)
