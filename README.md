@@ -168,7 +168,9 @@ CREATE TABLE reservas (
 | **quartos** | Armazena as informações dos quartos disponíveis no hotel, numero, tipo do quarto, status e o valor da diaria |
 | **reservas** | Gerencia as hospedagens do hotel, relacionando os hóspedes e os quartos que serao reservados |
 
+<img width="640" height="537" alt="image" src="https://github.com/user-attachments/assets/68553a46-e64b-456b-a94a-8e3ffc745d99" />
 
+<br>
 
 <img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
 
