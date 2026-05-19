@@ -119,7 +119,7 @@ async def hospedes(request: Request):
         }
     )
 
-#Adcionar Hospede
+#Adicionar Hospede
 @app.get("/add_hospede", response_class=HTMLResponse)
 async def add_hospedes(request: Request):
     return templates.TemplateResponse(
@@ -176,6 +176,7 @@ async def salvar_edit_hospede(request: Request, id: int):
     return RedirectResponse(url="/hospedes", status_code=303)
 
 #Excluir hospede
+# Só deleta clientes que não possuem reserva ativa.
 @app.post("/delete_hospede/{id}", response_class=HTMLResponse)
 async def excluir_hospede(id: int):
 
