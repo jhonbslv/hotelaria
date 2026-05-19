@@ -1,19 +1,49 @@
 from dao import conectar
 
 # Espaço da Lara
-def get_posts():
+def get_hospedes():
+    
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM hotelaria")
-    dados = cursor.fetchall()
+    cursor.execute("SELECT COUNT(id) AS total_hospedes FROM hospedes")
+    dados= cursor.fetchone
 
     cursor.close()
     conn.close()
 
     return dados
 
-# Espaço da Sophia
+def get_quartos():
+    
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT COUNT(id) AS total_quartos FROM quartos")
+    dados= cursor.fetchone
+
+    cursor.close()
+    conn.close()
+
+    return dados
+
+def get_reservas_ativas():
+    
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT COUNT(id) AS total_hospedes FROM hospedes")
+    dados= cursor.fetchone
+
+    cursor.close()
+    conn.close()
+
+    return dados
+
+
+
+
+# ==================================== HOSPEDES ==================================
 # ====_Mostrar_Todos_os_Hospedes_====
 def consulta_hospedes():
     conn = conectar()
@@ -34,9 +64,7 @@ def consulta_hospede_id(id):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
-    sql= "SELECT * FROM posts WHERE id = %s"
-
-    cursor.execute(sql,(id,))
+    cursor.execute("SELECT * FROM posts WHERE id = %s",(id,))
     dados= cursor.fetchone
 
     cursor.close()
@@ -66,17 +94,55 @@ def add_hospede(nome, email, telefone, cpf):
     conn.close()
 
     return dados
+
+# ===_Atulizar_Hospede_====
+def update_hospede(id,nome, email, telefone, cpf):
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    valores = (nome, email, telefone, cpf, id)
+
+    cursor.execute("""
+        UPDATE hospedes
+        SET nome = %s,
+            email = %s,
+            telefone = %s,
+            cpf = %s
+        WHERE id = %s
+    """,valores)
+
+    cursor.close()
+    conn.close()
+
+def delete_hospede(id):
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM hospedes WHERE id = %s", (id,))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+#==============================================================================
+
+
+
+
     
 
 # Espaço da Katrina quarto
 
 # ===_Cadastrar_Quartos_====
-#listar os quartos
+# listar quartos
 def consulta_quartos():
+
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT * FROM quartos")
+
     dados = cursor.fetchall()
 
     cursor.close()
@@ -84,20 +150,24 @@ def consulta_quartos():
 
     return dados
 
-# consulta dos quartos por id
+
+# buscar quarto por id
 def consulta_quarto_id(id):
+
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
+    cursor.execute("SELECT * FROM quartos WHERE id = %s",(id,))
 
-    cursor.execute(("SELECT * FROM quartos WHERE id = %s", id,))
     dados = cursor.fetchone()
 
+    cursor.close()
     conn.close()
 
     return dados
 
-# inserir quarto 
+
+# add quarto
 def add_quarto(numero, tipo, valor_diaria, status):
 
     conn = conectar()
@@ -106,50 +176,55 @@ def add_quarto(numero, tipo, valor_diaria, status):
     valores = (numero, tipo, valor_diaria, status)
 
     cursor.execute("""
-    INSERT INTO quartos(
-        numero,
-        tipo,
-        valor_diaria,
-        status
-    )
-
-    VALUES(%s, %s, %s, %s)
+        INSERT INTO quartos(
+            numero,
+            tipo,
+            valor_diaria,
+            status
+        )
+        VALUES(%s, %s, %s, %s)
     """, valores)
 
     conn.commit()
+
+    cursor.close()
     conn.close()
 
-#update edit de quartos
+
+# edit quarto
 def update_quarto(id, numero, tipo, valor_diaria, status):
 
     conn = conectar()
     cursor = conn.cursor()
 
-
-    valores = (id, numero, tipo, valor_diaria, status)
+    valores = (numero, tipo, valor_diaria, status, id)
 
     cursor.execute("""
-    UPDATE quartos
-    SET numero=%s,
-        tipo=%s,
-        valor_diaria=%s,
-        status=%s
-    WHERE id=%s
+        UPDATE quartos
+        SET numero = %s,
+            tipo = %s,
+            valor_diaria = %s,
+            status = %s
+        WHERE id = %s
     """, valores)
 
     conn.commit()
+
+    cursor.close()
     conn.close()
 
 
-# deletar quarto
+# delete quarto
 def delete_quarto(id):
 
     conn = conectar()
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM quartos WHERE id=%s", (id,))
+    cursor.execute("DELETE FROM quartos WHERE id = %s",(id,))
 
     conn.commit()
+
+    cursor.close()
     conn.close()
 
 

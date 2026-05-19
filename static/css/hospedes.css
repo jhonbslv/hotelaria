@@ -1,0 +1,71 @@
+/* Pagina geral de hospedes */
+
+.hospedes{
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+}
+
+.hospedes__topo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.hospedes__titulo{
+    font-size: 38px;
+    color: #111;
+}
+
+.hospedes__descricao{
+    color: #777;
+    margin-top: 8px;
+}
+
+.hospedes__btn{
+    background: #202ec7;
+    color: white;
+    text-decoration: none;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.hospedes__tabela{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.hospedes__tabela th{
+    background: #f4f4f4;
+    padding: 18px;
+    text-align: left;
+}
+
+.hospedes__tabela td{
+    padding: 18px;
+    border-bottom: 1px solid #eee;
+}
+
+.hospedes__acoes{
+    display: flex;
+    gap: 10px;
+}
+
+.hospedes__editar{
+    background: #202ec7;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.hospedes__excluir{
+    background: #ff3b30;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}

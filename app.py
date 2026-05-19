@@ -12,12 +12,32 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    posts = model.get_posts()
+    listar_hospedes = model.get_hospedes()
 
     return templates.TemplateResponse(
         request=request,
         name="index.html",
-        context={"posts": posts}
+        context={"listar_hospedes": listar_hospedes}
+    )
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    listar_quartos = model.get_quartos()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"listar_quartos": listar_quartos}
+    )
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    listar_reservas_tivas = model.get_reservas_ativas()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"listar_reservas_tivas": listar_reservas_tivas}
     )
 
 #--------------------------
@@ -51,7 +71,7 @@ async def salvar_quarto(request: Request):
 
     form = await request.form()
 
-    add_quarto(
+    model.add_quarto(
         form.get("numero"),
         form.get("tipo"),
         form.get("valor_diaria"),
@@ -71,14 +91,13 @@ async def editar_quarto(request: Request, id: int):
         context={"request": request, "quarto": model.consulta_quarto_id(id)}
     )
 
-# SALVAR A EDIÇÃO DOS QUARTOS
-@app.post("/edit_quarto/{id}")
-async def salvar_edicao_quarto(request: Request, id: int):
+# SALVAR A ADIÇAO DE QUARTOS
+@app.post("/add_quarto", response_class=HTMLResponse)
+async def salvar_quarto(request: Request):
 
     form = await request.form()
 
-    model.update_quarto(
-        id,
+    model.add_quarto(
         form.get("numero"),
         form.get("tipo"),
         form.get("valor_diaria"),
@@ -112,6 +131,7 @@ async def hospedes(request: Request):
         }
     )
 
+#Adcionar Hospede
 @app.get("/add_hospede", response_class=HTMLResponse)
 async def add_hospedes(request: Request):
     return templates.TemplateResponse(
@@ -128,7 +148,7 @@ async def salvar_hospede(request: Request):
 
     form = await request.form()
 
-    add_hospede(
+    model.add_hospede(
         form.get("nome"),
         form.get("email"),
         form.get("telefone"),
@@ -136,3 +156,44 @@ async def salvar_hospede(request: Request):
     )
 
     return RedirectResponse(url="/hospedes", status_code=303)
+
+# Atualizar Hospede
+@app.get("/update_hospede/{id}", response_class=HTMLResponse)
+async def update_hospede(request: Request, id: int):
+
+    hospede = model.get_hospede(id)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="update_hospede.html",
+        context={
+            "request": request,
+            "hospede": hospede
+        }
+    )
+
+@app.post("/update_hospede/{id}", response_class=HTMLResponse)
+async def salvar_update_hospede(request: Request, id: int):
+
+    form = await request.form()
+
+    model.update_hospede(
+        id,
+        form.get("nome"),
+        form.get("email"),
+        form.get("telefone"),
+        form.get("cpf")
+    )
+
+    return RedirectResponse(url="/hospedes", status_code=303)
+
+#Excluir hospede
+@app.get("/delete_hospede/{id}", response_class=HTMLResponse)
+async def excluir_hospede(id: int):
+
+    model.elete_hospede(id)
+
+    return RedirectResponse(
+        url="/hospedes",
+        status_code=303
+    )
