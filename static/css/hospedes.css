@@ -69,3 +69,55 @@
     border-radius: 10px;
     cursor: pointer;
 }
+/* ============================================ */
+
+.form_hospede{
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    max-width: 600px;
+}
+
+.form_hospede__topo{
+    margin-bottom: 25px;
+}
+
+.form_hospede__titulo{
+    font-size: 36px;
+    color: #111;
+}
+
+.form_hospede__descricao{
+    color: #777;
+    margin-top: 8px;
+}
+
+.form_hospede__form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form_hospede__form input{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+}
+
+.form_hospede__form label{
+    font-weight: bold;
+    color: #333;
+}
+
+.form_hospede__btn{
+    margin-top: 10px;
+    background: #202ec7;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+/* ======================================================== */

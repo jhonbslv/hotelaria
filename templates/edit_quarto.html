@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Quarto</title>
 
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/form_quarto.css">
 
 </head>
 <body>
@@ -28,7 +28,34 @@
 
         <label>Tipo</label>
 
-        <input type="text" name="tipo" value="{{ quarto.tipo }}" required>
+        <select name="tipo" required>
+
+        <option value="Solteiro"
+            {% if quarto.tipo == 'Solteiro' %} selected {% endif %}>
+            Solteiro
+        </option>
+
+        <option value="Casal"
+            {% if quarto.tipo == 'Casal' %} selected {% endif %}>
+            Casal
+        </option>
+
+        <option value="Luxo"
+            {% if quarto.tipo == 'Luxo' %} selected {% endif %}>
+            Luxo
+        </option>
+
+        <option value="Suíte"
+            {% if quarto.tipo == 'Suíte' %} selected {% endif %}>
+            Suíte
+        </option>
+
+        <option value="Master"
+            {% if quarto.tipo == 'Master' %} selected {% endif %}>
+            Master
+        </option>
+
+        </select>
 
       </div>
 

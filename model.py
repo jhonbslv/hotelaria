@@ -7,7 +7,7 @@ def get_hospedes():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT COUNT(id) AS total_hospedes FROM hospedes")
-    dados= cursor.fetchone
+    dados= cursor.fetchone()
 
     cursor.close()
     conn.close()
@@ -20,7 +20,7 @@ def get_quartos():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT COUNT(id) AS total_quartos FROM quartos")
-    dados= cursor.fetchone
+    dados= cursor.fetchone()
 
     cursor.close()
     conn.close()
@@ -33,7 +33,7 @@ def get_reservas_ativas():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT COUNT(id) AS total_hospedes FROM hospedes")
-    dados= cursor.fetchone
+    dados= cursor.fetchone()
 
     cursor.close()
     conn.close()
@@ -49,9 +49,7 @@ def consulta_hospedes():
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
-    sql= "SELECT * FROM hospedes"
-
-    cursor.execute(sql)
+    cursor.execute("SELECT * FROM hospedes")
     dados = cursor.fetchall()
     
     cursor.close()
@@ -64,8 +62,8 @@ def consulta_hospede_id(id):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM posts WHERE id = %s",(id,))
-    dados= cursor.fetchone
+    cursor.execute("SELECT * FROM hospedes WHERE id = %s",(id,))
+    dados= cursor.fetchone()
 
     cursor.close()
     conn.close()
@@ -88,7 +86,7 @@ def add_hospede(nome, email, telefone, cpf):
         VALUES 
             (%s, %s, %s, %s)
         ''', valores)
-    dados= cursor.commit()
+    dados= conn.commit()
 
     cursor.close()
     conn.close()
@@ -192,7 +190,7 @@ def add_quarto(numero, tipo, valor_diaria, status):
 
 
 # edit quarto
-def update_quarto(id, numero, tipo, valor_diaria, status):
+def edit_quarto(id, numero, tipo, valor_diaria, status):
 
     conn = conectar()
     cursor = conn.cursor()
@@ -226,6 +224,19 @@ def delete_quarto(id):
 
     cursor.close()
     conn.close()
+
+#Espaço lara 
+def consulta_reservas():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM reservas")
+    dados = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+
+    return dados
 
 
 # Espaço do Jonatan

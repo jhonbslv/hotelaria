@@ -12,39 +12,26 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+
     listar_hospedes = model.get_hospedes()
-
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={"listar_hospedes": listar_hospedes}
-    )
-
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
     listar_quartos = model.get_quartos()
+    listar_reservas_ativas = model.get_reservas_ativas()
 
     return templates.TemplateResponse(
         request=request,
         name="index.html",
-        context={"listar_quartos": listar_quartos}
-    )
-
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    listar_reservas_tivas = model.get_reservas_ativas()
-
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={"listar_reservas_tivas": listar_reservas_tivas}
+        context={
+            "listar_hospedes": listar_hospedes,
+            "listar_quartos": listar_quartos,
+            "listar_reservas_ativas": listar_reservas_ativas
+        }
     )
 
 #--------------------------
 # Pagina de Quartos
 #--------------------------
 
-# LISTAR TODOS OS QUARTOS
+# Listar quartos
 @app.get("/quartos", response_class=HTMLResponse)
 async def quartos(request: Request):
 
@@ -54,7 +41,7 @@ async def quartos(request: Request):
         context={"request": request, "quartos": model.consulta_quartos()}
     )
 
-# ADICIONAR QUARTOS
+# Adicionar quartos
 @app.get("/add_quarto", response_class=HTMLResponse)
 async def add_quarto(request: Request):
 
@@ -65,7 +52,7 @@ async def add_quarto(request: Request):
     )
 
 
-# SALVAR A ADIÇAO DE QUARTOS
+# Salvar adição do quarto
 @app.post("/add_quarto", response_class=HTMLResponse)
 async def salvar_quarto(request: Request):
 
@@ -81,7 +68,7 @@ async def salvar_quarto(request: Request):
     return RedirectResponse(url="/quartos", status_code=303)
 
 
-# EDITAR QUARTOS
+# editar quartos
 @app.get("/edit_quarto/{id}", response_class=HTMLResponse)
 async def editar_quarto(request: Request, id: int):
 
@@ -91,13 +78,14 @@ async def editar_quarto(request: Request, id: int):
         context={"request": request, "quarto": model.consulta_quarto_id(id)}
     )
 
-# SALVAR A ADIÇAO DE QUARTOS
-@app.post("/add_quarto", response_class=HTMLResponse)
-async def salvar_quarto(request: Request):
+# salvar edição de quartos
+@app.post("/edit_quarto/{id}")
+async def salvar_edit_quarto(request: Request, id: int):
 
     form = await request.form()
 
-    model.add_quarto(
+    model.edit_quarto(
+        id,
         form.get("numero"),
         form.get("tipo"),
         form.get("valor_diaria"),
@@ -107,7 +95,7 @@ async def salvar_quarto(request: Request):
     return RedirectResponse(url="/quartos", status_code=303)
 
 
-# DELETAR UM QUARTO
+# Excluir um quarto
 @app.post("/delete_quarto/{id}")
 async def deletar_quarto(id: int):
 
@@ -158,7 +146,7 @@ async def salvar_hospede(request: Request):
     return RedirectResponse(url="/hospedes", status_code=303)
 
 # Atualizar Hospede
-@app.get("/update_hospede/{id}", response_class=HTMLResponse)
+@app.get("/edit_hospede/{id}", response_class=HTMLResponse)
 async def update_hospede(request: Request, id: int):
 
     hospede = model.get_hospede(id)
@@ -172,7 +160,7 @@ async def update_hospede(request: Request, id: int):
         }
     )
 
-@app.post("/update_hospede/{id}", response_class=HTMLResponse)
+@app.post("/edit_hospede/{id}", response_class=HTMLResponse)
 async def salvar_update_hospede(request: Request, id: int):
 
     form = await request.form()
@@ -196,4 +184,15 @@ async def excluir_hospede(id: int):
     return RedirectResponse(
         url="/hospedes",
         status_code=303
+    )
+
+
+#reservaas 
+@app.get("/reservas", response_class=HTMLResponse)
+async def lista_reservas(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="reservas.html",
+        context={"request": request, "reservas": model.consulta_reservas()}
     )
