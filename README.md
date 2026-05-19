@@ -12,24 +12,30 @@
 
 <img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
 
-### Descrição do projeto →
-O projeto "Gestão de Hotelaria" foi realizado com o objetivo de desenvolver uma
-aplicação web completa voltada para a administração e gerenciamento de um sistema hoteleriro, oferecendo praticidade, organização e eficiência para os processos internos de um hotel. A proposta principal do sistema é permitir o controle e gerenciamento das principais áreas operacionais do ambiente hoteleiro, centralizando funcionalidades importantes dentro de uma única plataforma web. O sistema foi planejado para auxiliar tanto no gerenciamento administrativo quanto no controle das A aplicação possui funcionalidades voltadas para: <br>
-- Cadastro e gerenciamento de hóspedes;
-- Controle e administração de quartos;
-- Realização e acompanhamento de reservas;
-- Gerenciamento de hospedagens;
+###  Descrição do projeto  →
 
-Uma das requisições do projeto, foram que fossem devidamente utilizados os seguintes programas em sua realização: <br>
-- **Backend:** Python com FastAPI <br>
-   Responsável pela lógica da aplicação, gerenciamento das rotas, processamento das informações e comunicação com o banco de dados.
-- **Frontend:** Jinja2 (renderização de templates) <br>
-   Utilizado para a renderização dinâmica dos templates HTML da aplicação, permitindo a integração entre interface e backend.
-- **Banco de Dados:** MySQL <br>
-  Responsável pelo armazenamento, organização e gerenciamento das informações do sistema.
-- **Arquitetura:** MVC (Model, View, Controller) <br>
-  Estrutura utilizada para separar responsabilidades dentro da aplicação, facilitando a organização, manutenção e escalabilidade do projeto.
+O projeto "Gestão de Hotelaria" foi realizado com o objetivo de desenvolver uma aplicação web completa voltada para a administração e gerenciamento de um sistema hoteleiro, oferecendo praticidade, organização e eficiência para os processos internos de um hotel.
+
+A proposta principal do sistema é permitir o controle e gerenciamento das principais áreas operacionais do ambiente hoteleiro, centralizando funcionalidades importantes dentro de uma única plataforma web.
+
+### Funcionalidades do sistema:
+
+-  Cadastro e gerenciamento de hóspedes
+-  Controle e administração de quartos
+-  Realização e acompanhamento de reservas
+-  Gerenciamento de hospedagens
+
+### Tecnologias utilizadas:
+
+| Camada | Tecnologia | Descrição |
+|--------|------------|-----------|
+| **Backend** | Python com FastAPI | Lógica da aplicação, gerenciamento das rotas e comunicação com o banco de dados |
+| **Frontend** | Jinja2 (templates) | Renderização dinâmica dos templates HTML |
+| **Banco de Dados** | MySQL | Armazenamento e gerenciamento das informações |
+| **Arquitetura** | MVC (Model, View, Controller) | Separação de responsabilidades, organização e manutenção do projeto |
+
 <br>
+
 Todas as informações e instruções para a realização do projeto foram passadas pelo professor orientador da matéria de Back-End Carlos através de um notion enviado:
 <br>
 <br>
@@ -154,12 +160,14 @@ CREATE TABLE reservas (
     FOREIGN KEY (quarto_id) REFERENCES quartos(id)
 );
 ```
-- **Tabela Hospedes**<br>
-    A tabela hospedes é responsável por armazenar as informações dos clientes cadastrados no sistema.
-- **Tabela Quartos**<br>
-    A tabela quartos é responsável pelo armazenamento das informações dos quartos disponíveis no hotel.
-- **Tabela Reservas**<br>
-    A tabela reservas é responsável pelo gerenciamento das hospedagens realizadas no hotel, relacionando hóspedes e quartos.
+### **Estrutura das tabelas:**
+
+| **Tabela** | **Descrição** |
+| --- | --- |
+| **hospedes** | Armazena as informações dos clientes cadastrados no sistema com nome, email, telefone e cpf  |
+| **quartos** | Armazena as informações dos quartos disponíveis no hotel, numero, tipo do quarto, status e o valor da diaria |
+| **reservas** | Gerencia as hospedagens do hotel, relacionando os hóspedes e os quartos que serao reservados |
+
 
 
 <img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
@@ -180,17 +188,18 @@ def conectar():
     )
 
 ```
-- **host="localhost"** <br>
-Define o servidor onde o banco de dados está hospedado.
-O termo "localhost" indica que o MySQL está sendo executado na própria máquina do usuário.
-- **user="root"** <br>
-Define o usuário utilizado para acessar o MySQL.
-O usuário "root" é o administrador padrão do banco de dados.
-- **password=""** <br>
-Campo utilizado para inserir a senha do MySQL.
-Caso o banco possua senha configurada, ela deve ser informada entre as aspas.
-- **conectar()** <br>
-   Retorna uma conexão ativa com o banco de dados, permitindo que outras partes do sistema realizem consultas, inserções, atualizações e exclusões de informações.
+### **Parâmetros de conexão:**
+
+| **Parâmetro** | **Descrição** |
+| --- | --- |
+| `host="localhost"` | Define o servidor onde o banco de dados está hospedado ("localhost" indica que o MySQL está na própria máquina) |
+| `user="root"` | Define o usuário para acessar o MySQL (padrão: "root" - administrador do banco) |
+| `password=""` | Senha do MySQL (deve ser informada entre as aspas se houver senha configurada), mas estamos hospedando na propria máquina, então não terá senha, assim ficará somente "" (aspas duplas vazias) |
+| `database="hotelaria"` | Nome do banco de dados criado anteriormente como DATABASE |
+
+### **Função `conectar()`:**
+
+Retorna uma conexão ativa com o banco de dados, permitindo que outras partes do sistema realizem consultas, inserções, atualizações e exclusões de informações.
 
 <img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
 
@@ -204,24 +213,73 @@ Após a ativação do ambiente virtual, execute a aplicação utilizando o coman
       uvicorn app:app --reload
 ```
 
-- **uvicorn** <br>
-Inicia o servidor responsável pela execução da aplicação FastAPI.
-- **app:app** <br>
-O primeiro app refere-se ao nome do arquivo app.py.
-O segundo app refere-se à instância criada dentro do arquivo:
-- **--reload** <br>
-Permite que o servidor reinicie automaticamente sempre que houver alterações no código-fonte, facilitando o desenvolvimento da aplicação.
+### **Entendendo o comando:**
+
+| **Parâmetro** | **Descrição** |
+| --- | --- |
+| `uvicorn` | Inicia o servidor responsável pela execução da aplicação FastAPI |
+| `app:app` | Primeiro "app" = nome do arquivo `app.py` / Segundo "app" = instância criada dentro do arquivo |
+| `--reload` | Permite que o servidor reinicie automaticamente ao detectar alterações no código (modo desenvolvimento) |
+
+### **Acessando o sistema:**
 
 Após executar o comando, o terminal exibirá uma mensagem semelhante a:
 
 ```bash
-     Uvicorn running on http://127.0.0.1:8000
+Uvicorn running on http://127.0.0.1:8000
 ```
 
-O sistema poderá ser acessado através do navegador, utilizando o endereço dado pelo próprio terminal:
+O sistema poderá ser acessado através do navegador utilizando o endereço fornecido:
 
-```bash
-      [pip list](http://127.0.0.1:8000)
 ```
+http://127.0.0.1:8000
+```
+
+### **Rotas disponíveis:**
+
+| **Rota** | **Descrição** |
+| --- | --- |
+| `/` | Dashboard inicial |
+| `/hospedes` | Listagem de hóspedes |
+| `/quartos` | Listagem de quartos |
+| `/reservas` | Listagem de reservas |
+
+### **Para encerrar o servidor:**
+
+Pressione `Ctrl + C` no terminal.
+
+<img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
+
+## **📁 Estrutura do Projeto**
+```
+Projeto/
+│
+├── static/
+│   ├── img/
+│   ├── js/
+│   └── css/
+│
+├── templates/
+│   ├── index.html
+│   ├── hospedes.html
+│   ├── quartos.html
+│   ├── reservas.html
+│   ├── add_hospede.html
+│   ├── edit_hospede.html
+│   ├── add_quarto.html
+│   ├── edit_quarto.html
+│   ├── add_reserva.html
+│   ├── edit_reserva.html
+│   └── view_reserva.html
+│
+├── app.py          # Rotas (Controller)
+├── dao.py          # Conexão com o banco
+└── model.py        # Regras de negócio e acesso aos dados
+```
+<img alt="decoração" src="https://github.com/user-attachments/assets/e2b5452a-aac6-4471-bae4-356a6571f94f" width="450" />
+
+## **👨‍💻 Autores**
+
+Projeto desenvolvido como parte da disciplina de Back-End (MVC), sob orientação do professor Carlos.
 
 
