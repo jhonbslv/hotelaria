@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalhes da Reserva</title>
+
+    <link rel="stylesheet" href="../static/css/form_quarto.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="form">
+
+        <h1>Detalhes da Reserva</h1>
+
+
+        <div class="input_group">
+
+            <label>Nome do Hóspede</label>
+
+            <input type="text" value="{{ reserva.hospede_nome }}" disabled >
+
+        </div>
+
+        <div class="input_group">
+
+            <label>Email</label>
+
+            <input type="text" value="{{ reserva.email }}" disabled >
+
+        </div>
+
+        <div class="input_group">
+
+            <label>Telefone</label>
+
+            <input type="text" value="{{ reserva.telefone }}" disabled >
+
+        </div>
+
+        <!-- QUARTO -->
+
+        <div class="input_group">
+
+            <label>Quarto</label>
+
+            <input type="text" value="Quarto {{ reserva.numero }} - {{ reserva.tipo }}" disabled >
+
+        </div>
+
+        <div class="input_group">
+
+            <label>Valor da Diária</label>
+
+            <input type="text" value="R$ {{ reserva.valor_diaria }}" disabled >
+
+        </div>
+
+
+        <div class="input_group">
+
+            <label>Data Check-in</label>
+
+            <input type="text" value="{{ reserva.data_checkin }}" disabled >
+
+        </div>
+
+        <div class="input_group">
+
+            <label>Data Check-out</label>
+
+            <input type="text" value="{{ reserva.data_checkout }}" disabled >
+
+        </div>
+
+        <div class="input_group">
+
+            <label>Valor Total da Estadia</label>
+
+            <input type="text" value="R$ {{ reserva.valor_total }}" disabled>
+
+        </div>
+
+      
+
+        <div class="buttons">
+
+            <a href="/reservas" class="btn_cancelar">
+
+                Voltar
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

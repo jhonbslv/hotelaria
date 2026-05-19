@@ -6,7 +6,7 @@
 
     <title>Quartos</title>
 
-    <link rel="stylesheet" href="../static/css/quarto.css">
+    <link rel="stylesheet" href="../static/css/reserva.css">
     <link rel="stylesheet" href="../static/css/index.css">
 </head>
 <body>
@@ -34,6 +34,13 @@
 
         <!-- MENU -->
         <div class="paginas">
+            <div class="pagina_4"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+                </svg>  
+                <a href="/">Tela inicial</a>
+
+            </div>
 
             <div class="pagina_1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#29292b" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -58,13 +65,7 @@
                 <a href="/reservas">Reservas</a>
             </div>
 
-            <div class="pagina_4"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
-                </svg>  
-                <a href="/">Tela inicial</a>
-
-            </div>
+            
 
         </div>
 
@@ -78,124 +79,88 @@
 
             <div>
 
-                <h1>Gerenciamento de Quartos</h1>
+                <h1>Gerenciamento de reservas</h1>
 
-                <p>Controle completo dos quartos</p>
+                <p>Controle completo de reservas</p>
 
             </div>
 
-            <a href="/add_quarto" class="btn_add">
+            <a href="/add_reserva" class="btn_add">
 
-                Novo Quarto
+                Nova reserva
 
             </a>
 
         </div>
 
         <!-- CARDS -->
-        <div class="cards">
-
-            <div class="card card-1">
-
-                <h2>Quartos Disponíveis</h2>
-
-                <h1>42</h1>
-
-            </div>
-
-            <div class="card card-2">
-
-                <h2>Quartos Ocupados</h2>
-
-                <h1>12</h1>
-
-            </div>
-
-            <div class="card card-3">
-
-                <h2>Manutenção</h2>
-
-                <h1>6</h1>
-
-            </div>
-
-        </div>
+        
 
         <!-- TABELA -->
         <div class="table_container">
 
             <div class="table_top">
 
-                <h2>Lista de Quartos</h2>
+                <h2>Lista de reservas</h2>
 
             </div>
 
-            <table>
+          <table>
 
-                <thead>
+    <thead>
+        <tr>
+            <th>Nome do hóspede</th>
+            <th>Número do quarto</th>
+            <th>Data de entrada</th>
+            <th>Data de saída</th>
 
-                    <tr>
+            <th>Ações</th>
+        </tr>
+    </thead>
 
-                        <th>Número</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Ações</th>
+    <tbody>
 
-                    </tr>
+        {% for q in reservas %}
 
-                </thead>
+        <tr>
 
-                <tbody>
+            <td>{{ q.hospede }}</td>
 
-                    {% for q in quartos %}
+            <td>{{ q.quarto }}</td>
 
-                    <tr>
+            <td>{{ q.data_checkin }}</td>
 
-                        <td>{{ q.numero }}</td>
+            <td>{{ q.data_checkout }}</td>
 
-                        <td>{{ q.tipo }}</td>
+            
 
-                        <td>R$ {{ q.valor_diaria }}</td>
+            <td class="acoes">
 
-                        <td>
+                <a href="/edit_reserva/{{ q.id }}" class="btn_editar">
+                    Editar
+                </a>
 
-                            <span class="status {{ q.status.lower() }}">
+                <a href="/reserva/{{ q.id }}" class="btn_ver">
+                    Ver Reserva
+                </a>
 
-                                {{ q.status }}
+                <form action="/delete_reserva/{{ q.id }}" method="post">
 
-                            </span>
+                    <button type="submit" class="btn_excluir">
+                        Excluir
+                    </button>
 
-                        </td>
+                </form>
 
-                        <td class="acoes">
+            </td>
 
-                            <a href="/edit_quarto/{{ q.id }}" class="btn_editar">
+        </tr>
 
-                                Editar
+        {% endfor %}
 
-                            </a>
+    </tbody>
 
-                            <form action="/delete_quarto/{{ q.id }}" method="post">
-
-                                <button class="btn_excluir">
-
-                                    Excluir
-
-                                </button>
-
-                            </form>
-
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
+</table>
         </div>
 
     </main>

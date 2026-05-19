@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Reserva</title>
+
+    <link rel="stylesheet" href="../static/css/add_reserva.css">
+
+</head>
+<body>
+
+    <div class="container">
+
+        <form action="/edit_reserva/{{ reserva.id }}" method="post">
+
+            <h1>Editar Reserva</h1>
+
+            <div class="input_group">
+
+                <label>Hóspede</label>
+
+                <select name="hospede_id" required>
+
+                    {% for h in hospedes %}
+
+                    <option value="{{ h.id }}"{% if h.id == reserva.hospede_id %} selected {% endif %}>
+                    {{ h.nome }}</option>
+                    
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="input_group">
+
+                <label>Quarto</label>
+
+                <select name="quarto_id" required>
+
+                    {% for q in quartos %}
+
+                    <option 
+                        value="{{ q.id }}"
+                        {% if q.id == reserva.quarto_id %}selected{% endif %}>
+                        Quarto {{ q.numero }} - {{ q.tipo }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="input_group">
+
+                <label>Data de Entrada</label>
+
+                <input type="date" name="data_entrada" value="{{ reserva.data_checkin }}" required >
+
+            </div>
+
+            <div class="input_group">
+
+                <label>Data de Saída</label>
+
+                <input  type="date" name="data_saida" value="{{ reserva.data_checkout }}" required >
+
+            </div>
+
+            <div class="buttons">
+
+                <a href="/reservas" class="btn_cancelar">
+
+                    Cancelar
+
+                </a>
+
+                <button type="submit" class="btn_salvar">
+
+                    Salvar Alterações
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

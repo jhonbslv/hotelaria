@@ -27,9 +27,9 @@ async def home(request: Request):
         }
     )
 
-#--------------------------
+
 # Pagina de Quartos
-#--------------------------
+
 
 # Listar quartos
 @app.get("/quartos", response_class=HTMLResponse)
@@ -84,7 +84,7 @@ async def salvar_edit_quarto(request: Request, id: int):
 
     form = await request.form()
 
-    model.edit_quarto(
+    model.update_quarto(
         id,
         form.get("numero"),
         form.get("tipo"),
@@ -103,9 +103,9 @@ async def deletar_quarto(id: int):
 
     return RedirectResponse(url="/quartos", status_code=303)
 
-#--------------------------
+
 # Pagina de Hospedes
-#--------------------------
+
 
 # LISTAR TODOS OS HOSPEDES
 @app.get("/hospedes", response_class=HTMLResponse)
@@ -147,13 +147,13 @@ async def salvar_hospede(request: Request):
 
 # Atualizar Hospede
 @app.get("/edit_hospede/{id}", response_class=HTMLResponse)
-async def update_hospede(request: Request, id: int):
+async def edit_hospede(request: Request, id: int):
 
-    hospede = model.get_hospede(id)
+    hospede = model.consulta_hospede_id(id)
 
     return templates.TemplateResponse(
         request=request,
-        name="update_hospede.html",
+        name="edit_hospede.html",
         context={
             "request": request,
             "hospede": hospede
@@ -161,7 +161,7 @@ async def update_hospede(request: Request, id: int):
     )
 
 @app.post("/edit_hospede/{id}", response_class=HTMLResponse)
-async def salvar_update_hospede(request: Request, id: int):
+async def salvar_edit_hospede(request: Request, id: int):
 
     form = await request.form()
 
@@ -176,10 +176,10 @@ async def salvar_update_hospede(request: Request, id: int):
     return RedirectResponse(url="/hospedes", status_code=303)
 
 #Excluir hospede
-@app.get("/delete_hospede/{id}", response_class=HTMLResponse)
+@app.post("/delete_hospede/{id}", response_class=HTMLResponse)
 async def excluir_hospede(id: int):
 
-    model.elete_hospede(id)
+    model.delete_hospede(id)
 
     return RedirectResponse(
         url="/hospedes",
@@ -188,11 +188,123 @@ async def excluir_hospede(id: int):
 
 
 #reservaas 
+
+# PAGINA RESERVAS
+
+
+# LISTAR RESERVAS
 @app.get("/reservas", response_class=HTMLResponse)
 async def lista_reservas(request: Request):
 
     return templates.TemplateResponse(
         request=request,
         name="reservas.html",
-        context={"request": request, "reservas": model.consulta_reservas()}
+        context={
+            "request": request,
+            "reservas": model.consulta_reservas()
+        }
+    )
+
+
+# ADICIONAR RESERVA
+
+
+@app.get("/add_reserva", response_class=HTMLResponse)
+async def add_reserva(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="add_reserva.html",
+        context={
+            "request": request,
+            "hospedes": model.consulta_hospedes(),
+            "quartos": model.consulta_quartos()
+        }
+    )
+
+
+@app.post("/add_reserva", response_class=HTMLResponse)
+async def salvar_reserva(request: Request):
+
+    form = await request.form()
+
+    model.add_reserva(
+        form.get("hospede_id"),
+        form.get("quarto_id"),
+        form.get("data_entrada"),
+        form.get("data_saida")
+    )
+
+    return RedirectResponse(
+        url="/reservas",
+        status_code=303
+    )
+
+
+
+# EDITAR RESERVA
+
+@app.get("/edit_reserva/{id}", response_class=HTMLResponse)
+async def edit_reserva(request: Request, id: int):
+
+    reserva = model.consulta_reserva_id(id)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="edit_reserva.html",
+        context={
+            "request": request,
+            "reserva": reserva,
+            "hospedes": model.consulta_hospedes(),
+            "quartos": model.consulta_quartos()
+        }
+    )
+
+
+@app.post("/edit_reserva/{id}", response_class=HTMLResponse)
+async def salvar_edit_reserva(request: Request, id: int):
+
+    form = await request.form()
+
+    model.update_reserva(
+        id,
+        form.get("hospede_id"),
+        form.get("quarto_id"),
+        form.get("data_entrada"),
+        form.get("data_saida")
+    )
+
+    return RedirectResponse(
+        url="/reservas",
+        status_code=303
+    )
+
+
+# EXCLUIR RESERVA
+
+@app.post("/delete_reserva/{id}", response_class=HTMLResponse)
+async def excluir_reserva(id: int):
+
+    model.delete_reserva(id)
+
+    return RedirectResponse(
+        url="/reservas",
+        status_code=303
+    )
+
+
+# VISUALIZAR RESERVA
+
+@app.get("/reserva/{id}", response_class=HTMLResponse)
+async def view_reserva(request: Request, id: int):
+
+    reserva = model.consulta_reserva_id(id)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="view_reserva.html",
+        context={
+            "request": request,
+            "reserva": reserva
+        }
     )

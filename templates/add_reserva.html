@@ -1,69 +1,102 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Nova Reserva</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='css/addreserva.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../static/css/add_reserva.css">
+
 </head>
 <body>
 
-<div class="container">
-    
-    <aside class="sidebar">
-        <div class="logo">
-            <i class="fa-solid fa-hotel"></i>
-            <span>HOTEL ADMIN</span>
-        </div>
-        <nav class="menu">
-            <a href="/" class="menu-item">
-                <i class="fa-solid fa-table-columns"></i>
-                Dashboard
-            </a>
+    <div class="container">
 
-            <a href="/hospedes" class="menu-item">
-                <i class="fa-solid fa-users"></i>
-                Hóspedes
-            </a>
+        <form action="/add_reserva" method="post">
 
-            <a href="/quartos" class="menu-item">
-                <i class="fa-solid fa-bed"></i>
-                Quartos
-            </a>
+            <h1>Cadastrar Reserva</h1>
 
-            <a href="/reservas" class="menu-item active">
-                <i class="fa-solid fa-calendar-days"></i>
-                Reservas
-            </a>
+            <div class="input_group">
 
-            <a href="#" class="menu-item">
-                <i class="fa-solid fa-gear"></i>
-                Configurações
-            </a>
-        </nav>
-    </aside>
+                <label>Hóspede</label>
 
-    <main class="content">
+                <select name="hospede_id" required>
 
-        <div class="header">
-            <h1>Nova Reserva</h1>
-            <p>Cadastre uma nova hospedagem</p>
-        </div>
+                    <option value="">
+                        Selecione um hóspede
+                    </option>
 
-        <div class="card-form">
+                    {% for h in hospedes %}
 
-            <form action="/add_reserva" method="POST">
+                    <option value="{{ h.id }}">
 
-                <div class="form-group">
-                    <label>Hóspede</label>
-                    <select name="hospede_id" required>
-                        <option value="">Selecione um hóspede</option>
+                        {{ h.nome }}
 
-                        {% for hospede in hospedes %}
-                        <option value="{{ hospede.id }}">
-                            {{ hospede.nome }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    </option>
 
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        
+            <div class="input_group">
+
+                <label>Quarto</label>
+
+                <select name="quarto_id" required>
+
+                    <option value="">
+                        Selecione um quarto
+                    </option>
+
+                    {% for q in quartos %}
+
+                    <option value="{{ q.id }}">
+
+                        Quarto {{ q.numero }} - {{ q.tipo }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="input_group">
+
+                <label>Data de Entrada</label>
+
+                <input type="date" name="data_entrada" required >
+
+            </div>
+
+            <div class="input_group">
+
+                <label>Data de Saída</label>
+
+                <input type="date" name="data_saida" required>
+
+            </div>
+
+            <div class="buttons">
+
+                <a href="/reservas" class="btn_cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="btn_salvar">
+                    Salvar
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
